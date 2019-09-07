@@ -5,6 +5,19 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
+const encryptPass = async (password) => {
+    // Generate salt and encrypt the password
+    const salt = await bcrypt.genSalt(10);
+    return password = await bcrypt.hash(password,salt)
+}
+const getUserGravatarByEmail = async (email) => {
+    // Get the gravatar based on the email
+    return await gravatar.url(email,{
+        s:'200',
+        r:'pg',
+        d:'mm'
+    })}
+
 router.post('/',
 [
     //Check the fields recieved from the post request from users.
@@ -31,11 +44,7 @@ async (request,response) => {
         }
 
         // Get users gravatar
-        const avatar = await gravatar.url(email,{
-            s:'200',
-            r:'pg',
-            d:'mm'
-        });
+        const avatar = await getUserGravatarByEmail(email);
 
         // New user instance
         user = new User({
@@ -44,10 +53,9 @@ async (request,response) => {
             password,
             avatar,
         })
-
          // Encrypt password
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password,salt)
+        user.password = await encryptPass(user.password);
+        
         // TODO: Return jsonwebtoken
         
         await user.save()
