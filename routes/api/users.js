@@ -42,10 +42,10 @@ async (request,response) => {
         });
 
         user = new User({
-            name:name,
-            email:email,
-            password:password,
-            avatar:avatar
+            name,
+            email,
+            password,
+            avatar,
         })
 
          // Encrypt password
