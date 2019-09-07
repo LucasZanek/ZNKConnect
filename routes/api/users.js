@@ -5,10 +5,6 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-// @route  GET api/users
-// @desc   Register user 
-// @access Public
-
 router.post('/',
 [
     //Check the fields recieved from the post request from users.
@@ -41,6 +37,7 @@ async (request,response) => {
             d:'mm'
         });
 
+        // New user instance
         user = new User({
             name,
             email,
@@ -51,8 +48,8 @@ async (request,response) => {
          // Encrypt password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password,salt)
-        // Return jsonwebtoken
-       
+        // TODO: Return jsonwebtoken
+        
         await user.save()
         console.log(user)
         response.send(`User registered`)
