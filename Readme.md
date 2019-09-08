@@ -2,7 +2,8 @@
 
 -- Clone
 -- npm install
--- Create file default.json in the config folder and add your mongo URI like this {
-    "mongoURI":"YOUR MONGOURI"
+-- Create file default.json in the config folder and add this with your secret data{
+    "mongoURI":"YOUR MONGOURI",
+       "jwtSecret": "mysecrettokken"
 }   
 -- Npm run server
