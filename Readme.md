@@ -1,9 +1,24 @@
-## Developers social media in MERN stack (REACT, MONGODB, EXPRESS, REDUX, NODE)
+# Developers social media
+### Using MERN Stack (MONGODB, EXPRESS, REACT, NODEJS)
+> - jsonwebtoken
+> - bcryptjs
+> - mongoose
+> - gravatar
+> - express-validator
 
--- Clone
--- npm install
--- Create file default.json in the config folder and add this with your secret data{
+```
+- git clone
+- npm install
+- Create file default.json in the config folder and add this with your secret data{
     "mongoURI":"YOUR MONGOURI",
        "jwtSecret": "mysecrettokken"
 }   
--- Npm run server
+- npm run server
+```
+----------------------------------------------------------------------------------------
+
+## Back end at this moment:
+> - [x] Endpoint for register an user working and handling the errors
+> - [x] Registering an user in mongo db
+> - [x] Get the user avatar or assign a default one
+> - [x] Registering a secret jsonwebtoken and sending in the request response   
