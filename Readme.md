@@ -22,3 +22,5 @@
 > - [x] Registering an user in mongo db
 > - [x] Get the user avatar or assign a default one
 > - [x] Registering a secret jsonwebtoken and sending in the request response   
+> - [x] Middleware for manage the protected routes 
+> - [x] Checking the token if valid. Protecting the auth route based on the token
