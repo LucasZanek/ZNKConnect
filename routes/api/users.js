@@ -31,16 +31,16 @@ router.post('/',
 async (request,response) => {
     // Run and check the validations, if errors is not empty return the error array
     const {name,email,password} = request.body;
-    const errors = validationResult(request);
-    if(!errors.isEmpty()){
-        return response.status(400).json({errors:errors.array()});
+    const validationErrors = validationResult(request);
+    if(!validationErrors.isEmpty()){
+        return response.status(400).json({errors:validationErrors.array()});
     }
     try {
        
         // See if user exists
         let user = await User.findOne({email});
         if(user) {
-            response.status(400).json([{msg:'User already exists'}])
+           return response.status(400).json([{msg:'User already exists'}])
         }
 
         // Get users gravatar
@@ -54,7 +54,7 @@ async (request,response) => {
             avatar,
         })
          // Encrypt password
-        user.password = await encryptPass(user.password);
+        user.password = await encryptPass(password);
         
         // TODO: Return jsonwebtoken
         
