@@ -24,3 +24,4 @@
 > - [x] Registering a secret jsonwebtoken and sending in the request response   
 > - [x] Middleware for manage the protected routes 
 > - [x] Checking the token if valid. Protecting the auth route based on the token
+> - [x] Check the credentials and logue in the user
