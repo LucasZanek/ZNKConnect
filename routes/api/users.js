@@ -5,13 +5,22 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-const encryptPass = async (password) => {
-    // Generate salt and encrypt the password
+/** 
+     * Generate salt and encrypt the password
+     * @param password The password required for encrypt.
+*/
+const encryptPass = async (password) => { 
     const salt = await bcrypt.genSalt(10);
     return password = await bcrypt.hash(password,salt)
 }
+
+/** 
+     * Get gravatar based on the user email 
+     * * If the user don't have, return a default image.
+     * @param email The email required for the search. 
+*/
 const getUserGravatarByEmail = async (email) => {
-    // Get the gravatar based on the email
+    //* Get the gravatar based on the email
     return await gravatar.url(email,{
         s:'200',
         r:'pg',
@@ -20,7 +29,8 @@ const getUserGravatarByEmail = async (email) => {
 
 router.post('/',
 [
-    //Check the fields recieved from the post request from users.
+    //* Check the fields recieved from the post request from users.
+   
     check('name','Name is required').not().isEmpty(),
     check('email','Please include a valid email').isEmail(),
     check('password','Please include a password with 6 or more characters').isLength({
@@ -36,27 +46,27 @@ async (request,response) => {
         return response.status(400).json({errors:validationErrors.array()});
     }
     try {
-       
-        // See if user exists
+        //* See if user exists
         let user = await User.findOne({email});
         if(user) {
            return response.status(400).json([{msg:'User already exists'}])
         }
 
-        // Get users gravatar
+        //* Get users gravatar
+        
         const avatar = await getUserGravatarByEmail(email);
 
-        // New user instance
+        //* New user instance
         user = new User({
             name,
             email,
             password,
             avatar,
         })
-         // Encrypt password
+         //* Encrypt password
         user.password = await encryptPass(password);
         
-        // TODO: Return jsonwebtoken
+        // TODO: Return jsonwebtoken in order to verify if the user is logged in
         
         await user.save()
         console.log(user)
