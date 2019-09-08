@@ -3,7 +3,7 @@ const router = express.Router();
 const {check,validationResult} = require('express-validator');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const User = require('../../models/User');
 const jsonwebtoken = require('jsonwebtoken');
 const config = require('config');
 /** 
@@ -54,7 +54,6 @@ async (request,response) => {
         }
 
         //* Get users gravatar
-        
         const avatar = await getUserGravatarByEmail(email);
 
         //* New user instance
@@ -67,13 +66,8 @@ async (request,response) => {
          //* Encrypt password
         user.password = await encryptPass(password);
         
+        await user.save();
         
-        await user.save()
-        console.log(user)
-        // response.send(`User registered`)
-        
-        // TODO: Return jsonwebtoken in order to verify if the user is logged in
-
         const payload = {
             user:{ 
                 id:user.id
