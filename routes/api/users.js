@@ -4,7 +4,8 @@ const {check,validationResult} = require('express-validator');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-
+const jsonwebtoken = require('jsonwebtoken');
+const config = require('config');
 /** 
      * Generate salt and encrypt the password
      * @param password The password required for encrypt.
@@ -66,11 +67,29 @@ async (request,response) => {
          //* Encrypt password
         user.password = await encryptPass(password);
         
-        // TODO: Return jsonwebtoken in order to verify if the user is logged in
         
         await user.save()
         console.log(user)
-        response.send(`User registered`)
+        // response.send(`User registered`)
+        
+        // TODO: Return jsonwebtoken in order to verify if the user is logged in
+
+        const payload = {
+            user:{ 
+                id:user.id
+            }
+        }
+
+        // *Sign in the token, passing the secret and the payload, set the default expires and response with the token or an error.
+        jsonwebtoken.sign(
+            payload,
+            config.get('jwtSecret'),
+            // Todo change expires to an hour in prod.
+            {expiresIn:360000},
+            (err, token) => {
+                if(err) throw err;
+                return response.json({token});
+            })
 
     } catch (error) {
         console.error(error.message);
