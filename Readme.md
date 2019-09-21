@@ -27,3 +27,7 @@
 > - [x] Check the credentials and logue in the user
 > - [x] Validating and getting the current user profile
 > - [x] Endpoint for Create/Update user profile
+> - [x] Endpoint for Get logged profile
+> - [x] Endpoint for Get all profiles
+> - [x] Endpoint for Get profile by id
+

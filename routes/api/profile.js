@@ -22,7 +22,7 @@ router.get('/me', auth, async (request,response) => {
 
     } catch (error) {
         console.error(error.message);
-        response.status(500).send('Server error');
+        return response.status(500).send('Server error');
     }
 })
 
@@ -35,8 +35,6 @@ router.post('/', [auth, [
     check('skills','Skills is required').not().isEmpty()
 ]], 
 async (request,response) => {
-    mongoose.set('useFindAndModify', false);
-
     // Checking validation && errors 
     const errors = validationResult(request);
     if(!errors.isEmpty()){
@@ -103,10 +101,46 @@ async (request,response) => {
        response.json(profile);
 
     } catch (error) {
-       console.log(error.message);
-       response.status(500).send('Server error');
+        console.error(error.message);
+        return response.status(500).send('Server error');
    }
-})
+});
+
+// @route  GET api/profile
+// @desc   Get all profiles
+// @access Public
+
+router.get('/', async (request,response) => {
+    try {
+        const profiles = await Profile.find().populate('user',['name','avatar']);
+        response.json(profiles);
+    } catch (error) {
+        console.error(error.message);
+        return response.status(500).send('Server error');
+    }
+});
+
+// @route  GET api/profile/user/:user_id
+// @desc   Get all profile by user id
+// @access Public
+
+router.get('/user/:user_id', async (request,response) => {
+    try {
+        const profile = await Profile.findOne({user: request.params.user_id}).populate('user',['name','avatar']);
+        if(!profile) {
+            return response.status(400).json({msg: 'Profile not found'})
+        }
+        
+        response.json(profile);
+
+    } catch (error) {
+        if(error.kind == 'ObjectId'){
+            return response.status(400).json({msg: 'Profile not found'})
+        }
+        console.error(error.message);
+        return response.status(500).send('Server error');
+    }
+});
 
 
 module.exports = router;    
