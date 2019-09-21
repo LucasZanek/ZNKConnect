@@ -25,3 +25,5 @@
 > - [x] Middleware for manage the protected routes 
 > - [x] Checking the token if valid. Protecting the auth route based on the token
 > - [x] Check the credentials and logue in the user
+> - [x] Validating and getting the current user profile
+> - [x] Endpoint for Create/Update user profile
