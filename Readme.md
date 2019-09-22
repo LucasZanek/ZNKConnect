@@ -30,4 +30,4 @@
 > - [x] Endpoint for Get logged profile
 > - [x] Endpoint for Get all profiles
 > - [x] Endpoint for Get profile by id
-
+> - [x] Delete user 
