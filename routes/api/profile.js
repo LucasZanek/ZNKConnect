@@ -197,7 +197,7 @@ router.put('/experience', [auth, [
         description
     } = request.body;
 
-    const newExp = {
+    const newExperience = {
         title,
         company,
         location,
@@ -210,11 +210,11 @@ router.put('/experience', [auth, [
     try {
         // TODO: Add update experience logic
         const profile = await Profile.findOne({user:request.user.id});
-        profile.experience.unshift(newExp);
+        profile.experience.unshift(newExperience);
         await profile.save();
         response.json(profile);
     } catch (error) {
-        console.log(error);
+        console.error(error.message);
         return response.status(500).send('Server error'); 
     }
 });
@@ -239,8 +239,61 @@ router.delete('/experience/:exp_id', auth, async (request,response) => {
       response.json(profile);
 
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
         return response.status(500).send('Server error');
+    }
+});
+
+
+// @route  PUT api/profile/education
+// @desc   Add profile education
+// @access Private
+
+router.put('/education', [auth, [
+    check('school', 'School is required').not().isEmpty(),
+    check('degree','Degree is required').not().isEmpty(),
+    check('fieldofstudy','Field of study is required').not().isEmpty(),
+    check('from','From is required').not().isEmpty()
+]] ,async (request,response) => {
+    /**
+    * *Add and edit Education
+    */
+   
+    const errors = await validationResult(request);
+    if(!errors.isEmpty()){
+        return response.status(400).json({errors:errors.array()})
+    }
+
+    const {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to,
+        current,
+        description
+    } = request.body;
+
+    const newEducation = {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to,
+        current,
+        description
+    }
+
+    try {
+        // TODO: Add update education logic
+
+        const profile = await Profile.findOne({user:request.user.id});
+        profile.education.unshift(newEducation);
+        await profile.save();
+        response.json(profile);
+    } catch (error) {
+        console.error(error.message);
+        return response.status(500).send('Server error'); 
     }
 });
 
