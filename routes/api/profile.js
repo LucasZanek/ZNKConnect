@@ -180,7 +180,7 @@ router.put('/experience', [auth, [
     check('from','From is required').not().isEmpty()
 ]] ,async (request,response) => {
     /**
-    * *Add expierence 
+    * *Add expierence and edit experiences
     */
     const errors = validationResult(request);
     if(!errors.isEmpty()){
@@ -214,12 +214,34 @@ router.put('/experience', [auth, [
         await profile.save();
         response.json(profile);
     } catch (error) {
-        console.log(erro);
-      
+        console.log(error);
         return response.status(500).send('Server error'); 
     }
+});
 
+// @route  DELETE api/profile/experiende/:_id
+// @desc   Delete profile experience
+// @access Private
 
+router.delete('/experience/:exp_id', auth, async (request,response) => {
+    /**
+    * *Delete User experience
+    */
+    try {
+      const profile = await Profile.findOne({user:request.user.id});
+
+      // Get remove index 
+      const removeIndex = profile.experience.map(item => item.id).indexOf(request.params._id);
+      profile.experience.splice(removeIndex, 1);
+
+      await profile.save();
+      console.log('Experience deleted');
+      response.json(profile);
+
+    } catch (error) {
+        console.error(error.message);
+        return response.status(500).send('Server error');
+    }
 });
 
 module.exports = router;    

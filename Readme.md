@@ -32,3 +32,4 @@
 > - [x] Endpoint for Get profile by id
 > - [x] Endpoint for Delete user 
 > - [x] Endpoint for Create experiences
+> - [x] Endpoint for Delete experience by id
