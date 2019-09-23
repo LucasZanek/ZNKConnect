@@ -41,11 +41,9 @@
 > - [x] Endpoint for Get github repository by user name
 
 ## PreReq
-For using the github endpoint for get the repositories by user name , first register the in github OAuthApp and insert your credentials ind the default.json file.
+For using the github endpoint for get the repositories by user name , first register the app in github OAuthApp and insert your credentials ind the default.json file.
 
 https://github.com/settings/developers <----------------
-
-
 
 ## Postman Collection for testing API without front
 - TODO: Upload postman collection.
