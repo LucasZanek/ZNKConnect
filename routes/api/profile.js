@@ -231,7 +231,7 @@ router.delete('/experience/:exp_id', auth, async (request,response) => {
       const profile = await Profile.findOne({user:request.user.id});
 
       // Get remove index 
-      const removeIndex = profile.experience.map(item => item.id).indexOf(request.params._id);
+      const removeIndex = profile.experience.map(item => item.id).indexOf(request.params.exp_id);
       profile.experience.splice(removeIndex, 1);
 
       await profile.save();
@@ -249,7 +249,7 @@ router.delete('/experience/:exp_id', auth, async (request,response) => {
 // @desc   Add profile education
 // @access Private
 
-router.put('/education', [auth, [
+router.post('/education', [auth, [
     check('school', 'School is required').not().isEmpty(),
     check('degree','Degree is required').not().isEmpty(),
     check('fieldofstudy','Field of study is required').not().isEmpty(),
@@ -258,7 +258,7 @@ router.put('/education', [auth, [
     /**
     * *Add and edit Education
     */
-   
+
     const errors = await validationResult(request);
     if(!errors.isEmpty()){
         return response.status(400).json({errors:errors.array()})
@@ -294,6 +294,27 @@ router.put('/education', [auth, [
     } catch (error) {
         console.error(error.message);
         return response.status(500).send('Server error'); 
+    }
+});
+
+router.delete('/education/:edu_id', auth, async (request,response) => {
+    /**
+    * *Delete User education by id
+    */
+    try {
+      const profile = await Profile.findOne({user:request.user.id});
+
+      // Get remove index 
+      const removeIndex = profile.education.map(item => item.id).indexOf(request.params.edu_id);
+      profile.education.splice(removeIndex, 1);
+
+      await profile.save();
+      console.log('Education deleted');
+      response.json(profile);
+
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send('Server error');
     }
 });
 

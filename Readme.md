@@ -34,3 +34,4 @@
 > - [x] Endpoint for Create experiences
 > - [x] Endpoint for Delete experience by id
 > - [x] Endpoint for Create education
+> - [x] Endpoint for Delete education by id
