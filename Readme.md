@@ -8,10 +8,13 @@
 
 ```
 - git clone
-- npm install
+- npm instalL
 - Create file default.json in the config folder and add this with your secret data{
-    "mongoURI":"YOUR MONGOURI",
-       "jwtSecret": "mysecrettokken"
+    "mongoURI":"YOUR MONGO URI",
+    "jwtSecret":"mySecretjwt",
+    "gitHubClientId":"YOUR GITHUB CLIENT ID FOR THIS OAuthApp",
+    "gitHubSecret":"YOUR GITHUB SECRET FOR THIS OAuthApp"
+
 }   
 - npm run server
 ```
@@ -36,6 +39,12 @@
 > - [x] Endpoint for Create education
 > - [x] Endpoint for Delete education by id
 > - [x] Endpoint for Get github repository by user name
+
+## PreReq
+For using the github endpoint for get the repositories by user name , first register the in github OAuthApp
+--------> https://github.com/settings/developers <----------------
+
+
 
 ## Postman Collection for testing API without front
 - TODO: Upload postman collection.
