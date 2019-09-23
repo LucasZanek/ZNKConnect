@@ -35,3 +35,7 @@
 > - [x] Endpoint for Delete experience by id
 > - [x] Endpoint for Create education
 > - [x] Endpoint for Delete education by id
+> - [x] Endpoint for Get github repository by user name
+
+## Postman Collection for testing API without front
+- TODO: Upload postman collection.
