@@ -344,9 +344,6 @@ router.get('/github/:username',(req, res) => {
         console.log(error.message);
         return res.status(500).send('Server error');
     }
-});
-
-  module.exports = router;
-  
+});  
 
 module.exports = router;    
