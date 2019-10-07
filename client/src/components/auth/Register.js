@@ -1,24 +1,52 @@
 import React, { Fragment, useState } from "react";
+import axios from "axios";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
+  const userData = {
     name: "",
     email: "",
     password: "",
     password2: ""
-  });
+  };
+
+  const [formData, setFormData] = useState(userData);
 
   const onChange = event =>
     setFormData({ ...formData, [event.target.name]: event.target.value });
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     event.preventDefault();
     if (password !== password2) {
       console.log("The passwords do not match");
     } else {
-      console.log(formData);
+      try {
+        await testRequestProcess();
+      } catch (error) {
+        console.error(error.response.data);
+      }
     }
   };
+
+  const testRequestProcess = async () => {
+    //* Using the react hooks for the state we can access for the user data in this method
+    // TODO: ONLY for testing the connection with the api, Remove this request and implement REDUX
+    const newUser = {
+      name,
+      email,
+      password
+    };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify(newUser);
+    console.log(body);
+    const response = await axios.post("/api/users", body, config);
+  };
+
   const { name, email, password, password2 } = formData;
 
   return (
