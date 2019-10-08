@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const userData = {
     name: "",
     email: "",
@@ -17,7 +19,7 @@ const Register = () => {
   const onSubmit = async event => {
     event.preventDefault();
     if (password !== password2) {
-      console.log("The passwords do not match");
+      setAlert("The passwords do not match", "danger");
     } else {
     }
   };
@@ -86,4 +88,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(
+  null,
+  { setAlert }
+)(Register);
